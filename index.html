@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App</title>
+    <style>
+        body {
+            background-color: #d27676;
+        }
+        .app-container {
+            text-align: center;
+            width: 400px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        label {
+            font-size: 16px;
+        }
+        input[type="number"] {
+            padding: 4px 8px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            width: 140px;
+            font-size: 16px;
+        }
+
+        .balance-text {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h2>Bank App</h2>
+        
+        <div class="input-section">
+            <label for="amount">Enter Transaction Amount</label>
+            <input type="number" id="amount" min="0" step="0.01">
+        </div>
+
+        <div class="button-section">
+            <button id="credit-btn">Credit</button>
+            <button id="debit-btn">Debit</button>
+        </div>
+
+        <div class="balance-text" id="balance-display">
+            Your Account Balance is : $
+        </div>
+    </div>
+
+    <script>
+        let accountBalance = 0;
+        const amountInput = document.getElementById('amount');
+        const creditBtn = document.getElementById('credit-btn');
+        const debitBtn = document.getElementById('debit-btn');
+        const balanceDisplay = document.getElementById('balance-display');
+        function updateDisplay() {
+            balanceDisplay.textContent = `Your Account Balance is : $${accountBalance}`;
+            amountInput.value = '';
+        }
+        creditBtn.addEventListener('click', function() {
+            const amount = parseFloat(amountInput.value);
+            if (!isNaN(amount) && amount > 0) {
+                accountBalance += amount;
+                updateDisplay();
+            } else {
+                alert("Please enter a valid amount to credit.");
+            }
+        });
+        debitBtn.addEventListener('click', function() {
+            const amount = parseFloat(amountInput.value);
+            if (!isNaN(amount) && amount > 0) {
+                if (amount <= accountBalance) {
+                    accountBalance -= amount;
+                    updateDisplay();
+                } else {
+                    alert("Insufficient funds! You cannot debit more than your current balance.");
+                }
+            } else {
+                alert("Please enter a valid amount to debit.");
+            }
+        });
+    </script>
+</body>
+</html>
